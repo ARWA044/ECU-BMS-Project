@@ -1,0 +1,27 @@
+{
+  "pack": {
+    "nominal_voltage_v": 360.0,
+    "capacity_ah": 100.0,
+    "initial_soc_pct": 80.0,
+    "internal_resistance_ohm": 0.05
+  },
+  "simulation": {
+    "sample_time_s": 1.0,
+    "duration_s": 120,
+    "fault_start_s": 40,
+    "random_seed": 42,
+    "repetitions_per_fault": 20,
+    "train_fraction": 0.8
+  },
+  "illustrative_thresholds": {
+    "pack_overvoltage_v": 420.0,
+    "pack_undervoltage_v": 300.0,
+    "discharge_overcurrent_a": 150.0,
+    "overtemperature_c": 60.0
+  },
+  "notes": [
+    "All values are illustrative simulation assumptions, not OEM ECU specifications.",
+    "Pack-level thresholds are placeholders; real limits must come from cell and pack requirements.",
+    "The first version uses simplified synthetic signals, not a validated electrochemical battery model."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "ruleset_version": "bms-synthetic-v1",
+  "scope": "Illustrative battery-pack measurement limits from the uploaded generator, NOT an OEM test plan and NOT a complete ECU functional verdict",
+  "rules": [
+    {"id": "PACK_OVERVOLTAGE", "signal": "pack_voltage_v", "op": ">", "limit": 420.0, "unit": "V"},
+    {"id": "PACK_UNDERVOLTAGE", "signal": "pack_voltage_v", "op": "<", "limit": 300.0, "unit": "V"},
+    {"id": "DISCHARGE_OVERCURRENT", "signal": "pack_current_a", "op": ">", "limit": 150.0, "unit": "A"},
+    {"id": "PACK_OVERTEMPERATURE", "signal": "temperature_c", "op": ">", "limit": 60.0, "unit": "C"}
+  ]
+}

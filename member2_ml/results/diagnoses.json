@@ -1,0 +1,2228 @@
+[
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F00_R006",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": null,
+    "probable_causes": [],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": false,
+      "anomalous_windows": 1,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.04848
+        }
+      ]
+    },
+    "evidence": [],
+    "diagnostic_status": "no_anomaly_detected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Continue with the ECU functional test plan; no injected-fault diagnosis is confirmed.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F00_R007",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": null,
+    "probable_causes": [],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": false,
+      "anomalous_windows": 0,
+      "total_windows": 12,
+      "windows": []
+    },
+    "evidence": [],
+    "diagnostic_status": "no_anomaly_detected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Continue with the ECU functional test plan; no injected-fault diagnosis is confirmed.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F00_R017",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": null,
+    "probable_causes": [],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": false,
+      "anomalous_windows": 1,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "score": 0.05136
+        }
+      ]
+    },
+    "evidence": [],
+    "diagnostic_status": "no_anomaly_detected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Continue with the ECU functional test plan; no injected-fault diagnosis is confirmed.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F00_R019",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": null,
+    "probable_causes": [],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": false,
+      "anomalous_windows": 0,
+      "total_windows": 12,
+      "windows": []
+    },
+    "evidence": [],
+    "diagnostic_status": "no_anomaly_detected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Continue with the ECU functional test plan; no injected-fault diagnosis is confirmed.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F01_R003",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERVOLTAGE",
+    "probable_causes": [
+      {
+        "code": "OVERVOLTAGE",
+        "score": 0.99,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 5,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.04974
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.07068
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.05515
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.06484
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.06021
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 84.0,
+        "value": 429.01618,
+        "unit": "V",
+        "supports": "PACK_OVERVOLTAGE measurement-limit violation; pack_voltage_v > 420.0",
+        "rule_id": "PACK_OVERVOLTAGE"
+      },
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 422.50542,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 63.369 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Verify pack-voltage measurement and charging regulation with independent instrumentation.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F01_R011",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERVOLTAGE",
+    "probable_causes": [
+      {
+        "code": "OVERVOLTAGE",
+        "score": 0.9733,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 2,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.06454
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.04742
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 68.0,
+        "value": 428.39224,
+        "unit": "V",
+        "supports": "PACK_OVERVOLTAGE measurement-limit violation; pack_voltage_v > 420.0",
+        "rule_id": "PACK_OVERVOLTAGE"
+      },
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 425.02558,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 66.254 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Verify pack-voltage measurement and charging regulation with independent instrumentation.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F01_R014",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERVOLTAGE",
+    "probable_causes": [
+      {
+        "code": "OVERVOLTAGE",
+        "score": 0.9733,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 7,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "score": 0.04931
+        },
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.05956
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.06114
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.11114
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.108
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.1139
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.085
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 44.0,
+        "value": 428.03933,
+        "unit": "V",
+        "supports": "PACK_OVERVOLTAGE measurement-limit violation; pack_voltage_v > 420.0",
+        "rule_id": "PACK_OVERVOLTAGE"
+      },
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 423.57766,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 64.654 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Verify pack-voltage measurement and charging regulation with independent instrumentation.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F01_R018",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERVOLTAGE",
+    "probable_causes": [
+      {
+        "code": "OVERVOLTAGE",
+        "score": 0.9633,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 11,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "score": 0.07424
+        },
+        {
+          "start_s": 10.0,
+          "end_s": 20.0,
+          "score": 0.06763
+        },
+        {
+          "start_s": 20.0,
+          "end_s": 30.0,
+          "score": 0.04741
+        },
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.12606
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.12419
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.12693
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.11855
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.10646
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.10075
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.10328
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.11961
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 60.0,
+        "value": 427.47867,
+        "unit": "V",
+        "supports": "PACK_OVERVOLTAGE measurement-limit violation; pack_voltage_v > 420.0",
+        "rule_id": "PACK_OVERVOLTAGE"
+      },
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 426.34908,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 67.521 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Verify pack-voltage measurement and charging regulation with independent instrumentation.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F02_R002",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "UNDERVOLTAGE",
+    "probable_causes": [
+      {
+        "code": "UNDERVOLTAGE",
+        "score": 0.98,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 5,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.07429
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.05332
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.08674
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.05482
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.06545
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 62.0,
+        "value": 289.57088,
+        "unit": "V",
+        "supports": "PACK_UNDERVOLTAGE measurement-limit violation; pack_voltage_v < 300.0",
+        "rule_id": "PACK_UNDERVOLTAGE"
+      },
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 291.10589,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 67.281 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Verify pack-voltage measurement and load/voltage behavior with independent instrumentation.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F02_R008",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "UNDERVOLTAGE",
+    "probable_causes": [
+      {
+        "code": "UNDERVOLTAGE",
+        "score": 0.9667,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 12,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "score": 0.08921
+        },
+        {
+          "start_s": 10.0,
+          "end_s": 20.0,
+          "score": 0.06606
+        },
+        {
+          "start_s": 20.0,
+          "end_s": 30.0,
+          "score": 0.07148
+        },
+        {
+          "start_s": 30.0,
+          "end_s": 40.0,
+          "score": 0.08237
+        },
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.14138
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.13583
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.15379
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.15331
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.12937
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.1194
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.11898
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.12911
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 110.0,
+        "value": 289.33948,
+        "unit": "V",
+        "supports": "PACK_UNDERVOLTAGE measurement-limit violation; pack_voltage_v < 300.0",
+        "rule_id": "PACK_UNDERVOLTAGE"
+      },
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 290.91377,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 67.806 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Verify pack-voltage measurement and load/voltage behavior with independent instrumentation.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F02_R009",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "UNDERVOLTAGE",
+    "probable_causes": [
+      {
+        "code": "UNDERVOLTAGE",
+        "score": 0.9933,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 12,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "score": 0.04883
+        },
+        {
+          "start_s": 10.0,
+          "end_s": 20.0,
+          "score": 0.05668
+        },
+        {
+          "start_s": 20.0,
+          "end_s": 30.0,
+          "score": 0.07715
+        },
+        {
+          "start_s": 30.0,
+          "end_s": 40.0,
+          "score": 0.05759
+        },
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.07338
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.06505
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.06846
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.07703
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.08609
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.10115
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.10285
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.10305
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 80.0,
+        "value": 289.63898,
+        "unit": "V",
+        "supports": "PACK_UNDERVOLTAGE measurement-limit violation; pack_voltage_v < 300.0",
+        "rule_id": "PACK_UNDERVOLTAGE"
+      },
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 290.4952,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 67.110 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Verify pack-voltage measurement and load/voltage behavior with independent instrumentation.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F02_R017",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "UNDERVOLTAGE",
+    "probable_causes": [
+      {
+        "code": "UNDERVOLTAGE",
+        "score": 0.9933,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 4,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "score": 0.05407
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.06286
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.07368
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.06746
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 102.0,
+        "value": 288.34901,
+        "unit": "V",
+        "supports": "PACK_UNDERVOLTAGE measurement-limit violation; pack_voltage_v < 300.0",
+        "rule_id": "PACK_UNDERVOLTAGE"
+      },
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 292.2233,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 65.897 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Verify pack-voltage measurement and load/voltage behavior with independent instrumentation.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F03_R001",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERCURRENT",
+    "probable_causes": [
+      {
+        "code": "OVERCURRENT",
+        "score": 1.0,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 9,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 10.0,
+          "end_s": 20.0,
+          "score": 0.04901
+        },
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.15332
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.14631
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.15516
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.15677
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.13477
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.17041
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.157
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.18023
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 109.0,
+        "value": 180.30816,
+        "unit": "A",
+        "supports": "DISCHARGE_OVERCURRENT measurement-limit violation; pack_current_a > 150.0",
+        "rule_id": "DISCHARGE_OVERCURRENT"
+      },
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 40.0,
+        "value": 172.17725,
+        "unit": "A",
+        "supports": "Largest observed one-sample change in pack_current_a: 141.252 A; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Check current measurement and load profile against the approved electrical test plan.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F03_R004",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERCURRENT",
+    "probable_causes": [
+      {
+        "code": "OVERCURRENT",
+        "score": 0.9933,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 8,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.09953
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.1119
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.12288
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.13945
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.10413
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.1472
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.14603
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.12529
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 104.0,
+        "value": 177.98297,
+        "unit": "A",
+        "supports": "DISCHARGE_OVERCURRENT measurement-limit violation; pack_current_a > 150.0",
+        "rule_id": "DISCHARGE_OVERCURRENT"
+      },
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 40.0,
+        "value": 169.96071,
+        "unit": "A",
+        "supports": "Largest observed one-sample change in pack_current_a: 144.930 A; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Check current measurement and load profile against the approved electrical test plan.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F03_R009",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERCURRENT",
+    "probable_causes": [
+      {
+        "code": "OVERCURRENT",
+        "score": 0.9967,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 8,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.13727
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.11171
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.10863
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.1218
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.12281
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.15686
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.10912
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.17353
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 115.0,
+        "value": 177.93933,
+        "unit": "A",
+        "supports": "DISCHARGE_OVERCURRENT measurement-limit violation; pack_current_a > 150.0",
+        "rule_id": "DISCHARGE_OVERCURRENT"
+      },
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 40.0,
+        "value": 170.34152,
+        "unit": "A",
+        "supports": "Largest observed one-sample change in pack_current_a: 136.477 A; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Check current measurement and load profile against the approved electrical test plan.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F03_R010",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERCURRENT",
+    "probable_causes": [
+      {
+        "code": "OVERCURRENT",
+        "score": 1.0,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 8,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.1284
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.14369
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.13069
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.15794
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.15742
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.15545
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.15941
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.17613
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 99.0,
+        "value": 191.21817,
+        "unit": "A",
+        "supports": "DISCHARGE_OVERCURRENT measurement-limit violation; pack_current_a > 150.0",
+        "rule_id": "DISCHARGE_OVERCURRENT"
+      },
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 40.0,
+        "value": 189.68493,
+        "unit": "A",
+        "supports": "Largest observed one-sample change in pack_current_a: 180.778 A; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Check current measurement and load profile against the approved electrical test plan.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F04_R002",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERTEMPERATURE",
+    "probable_causes": [
+      {
+        "code": "OVERTEMPERATURE",
+        "score": 0.9633,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 10,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 10.0,
+          "end_s": 20.0,
+          "score": 0.05735
+        },
+        {
+          "start_s": 20.0,
+          "end_s": 30.0,
+          "score": 0.04964
+        },
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.09113
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.07382
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.08268
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.09535
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.09532
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.12025
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.14559
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.12088
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 103.0,
+        "value": 69.97623,
+        "unit": "C",
+        "supports": "PACK_OVERTEMPERATURE measurement-limit violation; temperature_c > 60.0",
+        "rule_id": "PACK_OVERTEMPERATURE"
+      },
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 40.0,
+        "value": 65.39647,
+        "unit": "C",
+        "supports": "Largest observed one-sample change in temperature_c: 39.483 C; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Check thermal loading, temperature sensing and commanded cooling response.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F04_R003",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERTEMPERATURE",
+    "probable_causes": [
+      {
+        "code": "OVERTEMPERATURE",
+        "score": 0.98,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 6,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.04961
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.04937
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.1135
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.08694
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.09295
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.09863
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 114.0,
+        "value": 69.72111,
+        "unit": "C",
+        "supports": "PACK_OVERTEMPERATURE measurement-limit violation; temperature_c > 60.0",
+        "rule_id": "PACK_OVERTEMPERATURE"
+      },
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 40.0,
+        "value": 67.37972,
+        "unit": "C",
+        "supports": "Largest observed one-sample change in temperature_c: 41.581 C; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Check thermal loading, temperature sensing and commanded cooling response.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F04_R015",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERTEMPERATURE",
+    "probable_causes": [
+      {
+        "code": "OVERTEMPERATURE",
+        "score": 0.9767,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 7,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.06838
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.06916
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.06681
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.057
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.09788
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.09649
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.07742
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 120.0,
+        "value": 70.9472,
+        "unit": "C",
+        "supports": "PACK_OVERTEMPERATURE measurement-limit violation; temperature_c > 60.0",
+        "rule_id": "PACK_OVERTEMPERATURE"
+      },
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 40.0,
+        "value": 65.76567,
+        "unit": "C",
+        "supports": "Largest observed one-sample change in temperature_c: 39.551 C; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Check thermal loading, temperature sensing and commanded cooling response.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F04_R018",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "LIMIT_VIOLATION",
+    "detected_fault": "OVERTEMPERATURE",
+    "probable_causes": [
+      {
+        "code": "OVERTEMPERATURE",
+        "score": 0.9767,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 6,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.05277
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.05032
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.07857
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.11804
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.08862
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.11124
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 98.0,
+        "value": 69.98235,
+        "unit": "C",
+        "supports": "PACK_OVERTEMPERATURE measurement-limit violation; temperature_c > 60.0",
+        "rule_id": "PACK_OVERTEMPERATURE"
+      },
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 40.0,
+        "value": 66.05425,
+        "unit": "C",
+        "supports": "Largest observed one-sample change in temperature_c: 40.550 C; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Check thermal loading, temperature sensing and commanded cooling response.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F05_R001",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": null,
+    "probable_causes": [
+      {
+        "code": "VOLTAGE_SENSOR_FAULT",
+        "score": 0.9333,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": false,
+      "anomalous_windows": 1,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.06769
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 402.87572,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 44.244 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "uncertain",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Cross-check the voltage sensor against an independent reference measurement.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F05_R003",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": "VOLTAGE_SENSOR_FAULT",
+    "probable_causes": [
+      {
+        "code": "VOLTAGE_SENSOR_FAULT",
+        "score": 0.9567,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 11,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "score": 0.0629
+        },
+        {
+          "start_s": 10.0,
+          "end_s": 20.0,
+          "score": 0.05076
+        },
+        {
+          "start_s": 20.0,
+          "end_s": 30.0,
+          "score": 0.05571
+        },
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.06285
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.0835
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.07185
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.0561
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.06585
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.08695
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.06965
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.08058
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 313.12194,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 44.211 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Cross-check the voltage sensor against an independent reference measurement.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F05_R012",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": null,
+    "probable_causes": [
+      {
+        "code": "VOLTAGE_SENSOR_FAULT",
+        "score": 0.9333,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": false,
+      "anomalous_windows": 0,
+      "total_windows": 12,
+      "windows": []
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 315.63907,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 43.490 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "uncertain",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Cross-check the voltage sensor against an independent reference measurement.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F05_R016",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": "VOLTAGE_SENSOR_FAULT",
+    "probable_causes": [
+      {
+        "code": "VOLTAGE_SENSOR_FAULT",
+        "score": 0.8733,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 4,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 10.0,
+          "end_s": 20.0,
+          "score": 0.049
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.06547
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.08598
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.07725
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_voltage_v",
+        "timestamp_s": 40.0,
+        "value": 392.84563,
+        "unit": "V",
+        "supports": "Largest observed one-sample change in pack_voltage_v: 33.526 V; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Cross-check the voltage sensor against an independent reference measurement.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F06_R003",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": "CURRENT_SENSOR_FAULT",
+    "probable_causes": [
+      {
+        "code": "CURRENT_SENSOR_FAULT",
+        "score": 0.9933,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 6,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.05407
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.04971
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.05969
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.05892
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.07256
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.09006
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 40.0,
+        "value": 62.20735,
+        "unit": "A",
+        "supports": "Largest observed one-sample change in pack_current_a: 44.316 A; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Cross-check the current sensor against an independent calibrated measurement.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F06_R004",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": "CURRENT_SENSOR_FAULT",
+    "probable_causes": [
+      {
+        "code": "CURRENT_SENSOR_FAULT",
+        "score": 0.9667,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 12,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "score": 0.07905
+        },
+        {
+          "start_s": 10.0,
+          "end_s": 20.0,
+          "score": 0.05475
+        },
+        {
+          "start_s": 20.0,
+          "end_s": 30.0,
+          "score": 0.10029
+        },
+        {
+          "start_s": 30.0,
+          "end_s": 40.0,
+          "score": 0.09207
+        },
+        {
+          "start_s": 40.0,
+          "end_s": 50.0,
+          "score": 0.08322
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.06287
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.07124
+        },
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.06939
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.0622
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.06191
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.05837
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.06312
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 40.0,
+        "value": -26.84073,
+        "unit": "A",
+        "supports": "Largest observed one-sample change in pack_current_a: 56.228 A; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Cross-check the current sensor against an independent calibrated measurement.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F06_R005",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": "CURRENT_SENSOR_FAULT",
+    "probable_causes": [
+      {
+        "code": "CURRENT_SENSOR_FAULT",
+        "score": 0.94,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 2,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 70.0,
+          "end_s": 80.0,
+          "score": 0.05801
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.0677
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 40.0,
+        "value": 44.90855,
+        "unit": "A",
+        "supports": "Largest observed one-sample change in pack_current_a: 33.234 A; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Cross-check the current sensor against an independent calibrated measurement.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F06_R012",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": "CURRENT_SENSOR_FAULT",
+    "probable_causes": [
+      {
+        "code": "CURRENT_SENSOR_FAULT",
+        "score": 0.9667,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": true,
+      "anomalous_windows": 5,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 50.0,
+          "end_s": 60.0,
+          "score": 0.0777
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 90.0,
+          "score": 0.05529
+        },
+        {
+          "start_s": 90.0,
+          "end_s": 100.0,
+          "score": 0.06565
+        },
+        {
+          "start_s": 100.0,
+          "end_s": 110.0,
+          "score": 0.0994
+        },
+        {
+          "start_s": 110.0,
+          "end_s": 120.0,
+          "score": 0.07169
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "pack_current_a",
+        "timestamp_s": 40.0,
+        "value": -21.22272,
+        "unit": "A",
+        "supports": "Largest observed one-sample change in pack_current_a: 39.749 A; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "suspected",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Cross-check the current sensor against an independent calibrated measurement.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F07_R008",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": null,
+    "probable_causes": [
+      {
+        "code": "TEMPERATURE_SENSOR_FAULT",
+        "score": 0.9767,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": false,
+      "anomalous_windows": 1,
+      "total_windows": 12,
+      "windows": [
+        {
+          "start_s": 60.0,
+          "end_s": 70.0,
+          "score": 0.06884
+        }
+      ]
+    },
+    "evidence": [
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 40.0,
+        "value": 42.86271,
+        "unit": "C",
+        "supports": "Largest observed one-sample change in temperature_c: 17.047 C; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "uncertain",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Compare temperature measurement against an independent calibrated temperature reference.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F07_R009",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": null,
+    "probable_causes": [
+      {
+        "code": "TEMPERATURE_SENSOR_FAULT",
+        "score": 0.9733,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": false,
+      "anomalous_windows": 0,
+      "total_windows": 12,
+      "windows": []
+    },
+    "evidence": [
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 40.0,
+        "value": 44.95979,
+        "unit": "C",
+        "supports": "Largest observed one-sample change in temperature_c: 19.175 C; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "uncertain",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Compare temperature measurement against an independent calibrated temperature reference.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F07_R012",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": null,
+    "probable_causes": [
+      {
+        "code": "TEMPERATURE_SENSOR_FAULT",
+        "score": 0.97,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": false,
+      "anomalous_windows": 0,
+      "total_windows": 12,
+      "windows": []
+    },
+    "evidence": [
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 40.0,
+        "value": 43.13026,
+        "unit": "C",
+        "supports": "Largest observed one-sample change in temperature_c: 16.988 C; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "uncertain",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Compare temperature measurement against an independent calibrated temperature reference.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  },
+  {
+    "schema_version": "1.1",
+    "data_source": "synthetic_bms",
+    "session_id": "F07_R014",
+    "verdict": "NOT_EVALUATED",
+    "measurement_limits_status": "WITHIN_CONFIGURED_LIMITS",
+    "detected_fault": null,
+    "probable_causes": [
+      {
+        "code": "TEMPERATURE_SENSOR_FAULT",
+        "score": 0.9867,
+        "method": "random_forest",
+        "score_interpretation": "uncalibrated_class_probability"
+      }
+    ],
+    "anomaly_detection": {
+      "method": "isolation_forest",
+      "anomaly_detected": false,
+      "anomalous_windows": 0,
+      "total_windows": 12,
+      "windows": []
+    },
+    "evidence": [
+      {
+        "signal": "temperature_c",
+        "timestamp_s": 40.0,
+        "value": 10.42261,
+        "unit": "C",
+        "supports": "Largest observed one-sample change in temperature_c: 15.510 C; not proof of cause"
+      }
+    ],
+    "diagnostic_status": "uncertain",
+    "missing_info": [
+      "ECU response/actuator signals and approved timing requirements for functional PASS/FAIL",
+      "Independent physical measurements required for confirmed root-cause diagnosis"
+    ],
+    "recommended_test": "Compare temperature measurement against an independent calibrated temperature reference.",
+    "recommended_test_done": false,
+    "model_version": "bms-prototype-v1",
+    "ruleset_version": "bms-synthetic-v1"
+  }
+]

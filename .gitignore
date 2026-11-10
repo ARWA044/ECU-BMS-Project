@@ -1,0 +1,28 @@
+# Python environment/cache
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Credentials and local settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Regenerable trained models (available in delivered ZIP; retrain to recreate)
+member2_ml/models/*.joblib
+
+# Large/private future recordings
+*.blf
+member1_simulator/datasets/raw/
+member1_simulator/datasets/private/
+member2_ml/results/tmp/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/settings.json

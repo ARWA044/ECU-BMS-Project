@@ -1,0 +1,172 @@
+{
+  "model_version": "bms-prototype-v1",
+  "heldout_sessions": 32,
+  "classification_accuracy": 1.0,
+  "classification_report": {
+    "CURRENT_SENSOR_FAULT": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 4.0
+    },
+    "NORMAL": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 4.0
+    },
+    "OVERCURRENT": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 4.0
+    },
+    "OVERTEMPERATURE": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 4.0
+    },
+    "OVERVOLTAGE": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 4.0
+    },
+    "TEMPERATURE_SENSOR_FAULT": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 4.0
+    },
+    "UNDERVOLTAGE": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 4.0
+    },
+    "VOLTAGE_SENSOR_FAULT": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 4.0
+    },
+    "accuracy": 1.0,
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 32.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 32.0
+    }
+  },
+  "confusion_matrix_labels": [
+    "CURRENT_SENSOR_FAULT",
+    "NORMAL",
+    "OVERCURRENT",
+    "OVERTEMPERATURE",
+    "OVERVOLTAGE",
+    "TEMPERATURE_SENSOR_FAULT",
+    "UNDERVOLTAGE",
+    "VOLTAGE_SENSOR_FAULT"
+  ],
+  "confusion_matrix": [
+    [
+      4,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      4,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      4,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      4,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      4,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      4,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4
+    ]
+  ],
+  "anomaly_detection": {
+    "precision": 1.0,
+    "recall": 0.7857142857142857,
+    "f1": 0.88,
+    "true_faulty_sessions": 28,
+    "predicted_anomalous_sessions": 22
+  },
+  "limitations": [
+    "Evaluation uses held-out sessions from the same simplified generator; no real ECU validation.",
+    "Random Forest probabilities are not calibrated root-cause confidence scores.",
+    "Anomalies are not necessarily functional ECU FAILs; test-plan response signals are unavailable."
+  ]
+}

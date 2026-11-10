@@ -1,0 +1,11 @@
+{
+  "description": "Example ONLY. Adapt column names after checking signal meaning and units with Member 1. This is for CSV data, not automatic ASC decoding.",
+  "columns": {
+    "session_id": "scenario_id",
+    "time_sec": "timestamp_s",
+    "battery_pack_voltage_v": "pack_voltage_v",
+    "battery_pack_current_a": "pack_current_a",
+    "battery_temperature_c": "temperature_c",
+    "battery_soc_pct": "soc_pct"
+  }
+}

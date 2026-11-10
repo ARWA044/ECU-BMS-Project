@@ -1,0 +1,19 @@
+{
+  "model_version": "bms-prototype-v1",
+  "training_sessions": 128,
+  "train_classes": {
+    "CURRENT_SENSOR_FAULT": 16,
+    "NORMAL": 16,
+    "OVERCURRENT": 16,
+    "OVERTEMPERATURE": 16,
+    "OVERVOLTAGE": 16,
+    "TEMPERATURE_SENSOR_FAULT": 16,
+    "UNDERVOLTAGE": 16,
+    "VOLTAGE_SENSOR_FAULT": 16
+  },
+  "normal_train_windows": 144,
+  "normal_calibration_windows": 48,
+  "anomaly_score_threshold": 0.04697565361232441,
+  "calibration_quantile": 0.95,
+  "note": "Training and calibration use independent sessions; models are synthetic BMS only."
+}
