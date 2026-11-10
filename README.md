@@ -196,3 +196,8 @@ A different ECU or substantially different signal distribution requires an adapt
 Generated `.joblib` model binaries are included in the distributable project archive but ignored by Git; they can be recreated with the `train` command. Serialized models should only be loaded from trusted sources. Real automotive recordings may contain confidential information and should not be committed without authorization.
 
 No physical root-cause confirmation or industrial safety validation is claimed by this prototype.
+
+## Contributors
+
+- [ARWA044](https://github.com/ARWA044) — Machine Learning & Rule-Based Diagnosis
+- [ririoua](https://github.com/ririoua) — BMS Simulation & Dataset Generation
