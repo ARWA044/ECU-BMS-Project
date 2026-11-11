@@ -24,6 +24,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from member3_agent_app.services.data_loader import load_diagnoses, load_measurements
+from member3_agent_app.graph import run_diagnostic_workflow
 
 ROOT = Path(__file__).resolve().parents[1]
 CSV_PATH = ROOT / "member1_simulator" / "datasets" / "test.csv"
@@ -181,6 +182,57 @@ CSS = """
     .metric-value{font-size:1.09rem;}
     .info-card{padding:19px;}
   }
+
+  /* LangGraph : rapport visuel cohérent avec BMS Studio */
+  .lg-intro { padding:24px 26px 22px; border-radius:16px;
+      border:1px solid #35544d;
+      background:linear-gradient(115deg,rgba(30,60,53,.85),rgba(23,35,45,.96));
+      margin:16px 0 22px; }
+  .lg-eyebrow {font-size:.73rem;font-weight:750;letter-spacing:.10em;
+      color:var(--accent);text-transform:uppercase;margin-bottom:9px;}
+  .lg-heading {font-family:'Manrope','Segoe UI Variable',sans-serif!important;
+      font-size:clamp(1.3rem,2.15vw,1.9rem);font-weight:800;line-height:1.35;
+      letter-spacing:-.038em;color:var(--ink);margin-bottom:8px;}
+  .lg-description {font-size:.88rem;line-height:1.65;color:var(--muted);}
+  .lg-pill {display:inline-block;padding:5px 9px;border-radius:8px;font-size:.72rem;
+      font-weight:700;background:rgba(142,217,187,.1);
+      color:#a4e4c9;border:1px solid rgba(142,217,187,.28);margin:12px 7px 0 0;}
+  .lg-pill-warn {background:rgba(232,179,126,.08);color:#eac393;
+      border-color:rgba(232,179,126,.35);}
+  .lg-block-heading {font-family:'Manrope','Segoe UI Variable',sans-serif!important;
+      font-size:1.08rem;font-weight:770;color:var(--ink);margin:23px 0 12px;
+      letter-spacing:-.025em;}
+  .lg-block-sub {font-size:.81rem;color:var(--muted);font-weight:450;margin:0 0 12px;}
+  .lg-evidence {display:grid;grid-template-columns:100px minmax(0,1fr);
+      gap:17px;align-items:start;padding:17px 20px;margin:9px 0;
+      border:1px solid var(--line);background:var(--panel);border-radius:13px;}
+  .lg-time {color:var(--accent);font-size:.88rem;font-weight:800;
+      font-variant-numeric:tabular-nums;white-space:nowrap;padding-top:4px;}
+  .lg-signal {font-family:'Manrope','Segoe UI Variable',sans-serif!important;
+      color:var(--ink);font-size:.94rem;font-weight:750;overflow-wrap:anywhere;}
+  .lg-reading {display:inline-block;margin:8px 0 6px;padding:4px 9px;
+      border-radius:7px;background:rgba(142,217,187,.08);font-weight:700;
+      font-variant-numeric:tabular-nums;color:#a8e2c7;}
+  .lg-support {color:var(--muted);font-size:.83rem;line-height:1.64;overflow-wrap:anywhere;}
+  .lg-note {padding:15px 18px;border:1px solid var(--line);border-radius:12px;
+      background:var(--panel);margin:9px 0;color:var(--muted);
+      font-size:.88rem;line-height:1.65;overflow-wrap:anywhere;}
+  .lg-cause {border:1px solid #476359;background:linear-gradient(115deg,rgba(38,67,57,.55),rgba(23,35,45,.95));
+      padding:19px 21px;border-radius:14px;margin:9px 0 14px;}
+  .lg-cause-code {font-family:'Manrope','Segoe UI Variable',sans-serif!important;
+      color:var(--ink);font-size:1.18rem;font-weight:760;margin:4px 0 8px;}
+  .lg-cause-details {font-size:.82rem;color:var(--muted);line-height:1.65;}
+  .lg-test {border:1px solid rgba(142,217,187,.34);
+      border-left:4px solid var(--accent);background:rgba(142,217,187,.065);
+      border-radius:12px;padding:18px 20px;margin:9px 0 17px;}
+  .lg-test-title {color:var(--accent);font-size:.8rem;font-weight:780;margin-bottom:9px;}
+  .lg-test-text {font-size:.91rem;line-height:1.65;color:var(--ink);overflow-wrap:anywhere;}
+  .lg-test-status {font-size:.8rem;color:var(--muted);margin-top:11px;}
+  .lg-limit {padding:11px 14px;margin:8px 0;border-left:3px solid #e8b37e;
+      border-radius:6px 10px 10px 6px;background:rgba(232,179,126,.065);
+      color:#e3d5bd;font-size:.84rem;line-height:1.6;overflow-wrap:anywhere;}
+  .lg-disclaimer {font-size:.79rem;color:var(--subtle);line-height:1.7;margin:24px 0 8px;}
+  @media(max-width:650px) { .lg-intro{padding:20px;} .lg-evidence{grid-template-columns:1fr;gap:5px;} }
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
@@ -243,6 +295,131 @@ def card(title: str, headline: Any, description: str = "") -> None:
         f'<div class="info-body">{safe(description)}</div></div>',
         unsafe_allow_html=True,
     )
+
+
+
+def render_langgraph_report(graph_result: dict[str, Any]) -> None:
+    """Affiche les faits structurés du workflow, sans interpréter le Markdown brut.
+
+    Les valeurs de M2 restent telles quelles; HTML échappé pour éviter d'injecter
+    du balisage depuis les champs de diagnostic. Le rapport Markdown original est
+    toujours conservé pour le téléchargement.
+    """
+    source = graph_result.get("diagnosis") or {}
+    session = str(graph_result.get("session_id") or source.get("session_id") or "?")
+    evidence_items = [e for e in (graph_result.get("evidence") or []) if isinstance(e, dict)]
+    probable = [c for c in (graph_result.get("probable_causes") or []) if isinstance(c, dict)]
+    cautions = [str(c) for c in (graph_result.get("cautions") or [])]
+    anomaly_info = source.get("anomaly_detection") or {}
+
+    status_code = source.get("diagnostic_status", "unknown")
+    status_text = readable_status(status_code)
+    confirmed = status_code == "confirmed"
+    css_status = "lg-pill" if confirmed or status_code == "no_anomaly_detected" else "lg-pill lg-pill-warn"
+    if source.get("detected_fault"):
+        cause_note = "Cause physique non confirmée" if not confirmed else "Statut M2 : confirmé"
+    else:
+        cause_note = "Aucun défaut retenu par M2"
+    st.markdown(
+        '<div class="lg-intro">'
+        '<div class="lg-eyebrow">LangGraph · Rapport de diagnostic structuré</div>'
+        f'<div class="lg-heading">Analyse de la session {safe(session)}</div>'
+        '<div class="lg-description">Les observations de M2 sont organisées en preuves, '
+        'hypothèses et vérifications. Aucun verdict supplémentaire n’est calculé.</div>'
+        f'<span class="{css_status}">Statut : {safe(status_text)}</span>'
+        f'<span class="lg-pill lg-pill-warn">{safe(cause_note)}</span>'
+        '</div>', unsafe_allow_html=True,
+    )
+
+    cols = st.columns(4, gap="small")
+    with cols[0]:
+        metric("Verdict fonctionnel", "Non évalué" if source.get("verdict") == "NOT_EVALUATED" else (source.get("verdict") or "—"),
+               str(source.get("verdict", "—")))
+    with cols[1]:
+        violating = source.get("measurement_limits_status") == "LIMIT_VIOLATION"
+        metric("Limites de mesure", "Seuil dépassé" if violating else "Dans les limites",
+               str(source.get("measurement_limits_status", "—")), "tone-alert" if violating else "tone-good")
+    with cols[2]:
+        metric("Défaut proposé", readable_fault(source.get("detected_fault")),
+               str(source.get("detected_fault") or "Aucun"), "tone-violet")
+    with cols[3]:
+        atypical = anomaly_info.get("anomalous_windows", "—")
+        total = anomaly_info.get("total_windows", "—")
+        metric("Fenêtres atypiques", f"{atypical} / {total}",
+               "Isolation Forest · M2", "tone-cyan")
+
+    st.markdown('<div class="lg-block-heading">01 · Preuves horodatées</div>'
+                '<div class="lg-block-sub">Observations factuelles récupérées dans le diagnostic M2.</div>',
+                unsafe_allow_html=True)
+    if not evidence_items:
+        st.info("Le moteur M2 n’a fourni aucune preuve mesurée pour cette session.")
+    else:
+        for ev in sorted(evidence_items, key=lambda item: norm_number(item.get("timestamp_s")) if norm_number(item.get("timestamp_s")) is not None else float("inf")):
+            measured = f"{ev.get('value', '—')} {ev.get('unit') or ''}".strip()
+            st.markdown(
+                '<div class="lg-evidence">'
+                f'<div class="lg-time">t = {safe(ev.get("timestamp_s", "?"))} s</div>'
+                '<div>'
+                f'<div class="lg-signal">{safe(ev.get("signal") or "Signal inconnu")}</div>'
+                f'<div class="lg-reading">{safe(measured)}</div>'
+                f'<div class="lg-support">{safe(ev.get("supports") or "Aucune justification fournie.")}</div>'
+                '</div></div>', unsafe_allow_html=True,
+            )
+
+    st.markdown('<div class="lg-block-heading">02 · Hypothèses du modèle</div>'
+                '<div class="lg-block-sub">Des classes prédites, pas des causes physiques démontrées.</div>',
+                unsafe_allow_html=True)
+    if not probable:
+        st.markdown('<div class="lg-note">Aucune hypothèse de défaut renseignée par M2.</div>',
+                    unsafe_allow_html=True)
+    else:
+        for cause in probable:
+            code = cause.get("code") or "Non renseigné"
+            score_val = cause.get("score")
+            score_label = "Indisponible" if score_val is None else str(score_val)
+            meaning = cause.get("score_interpretation", "non précisée")
+            st.markdown(
+                '<div class="lg-cause">'
+                '<div class="lg-eyebrow">Hypothèse M2</div>'
+                f'<div class="lg-cause-code">{safe(readable_fault(code))}</div>'
+                '<div class="lg-cause-details">'
+                f'Code : {safe(code)} · Méthode : {safe(cause.get("method") or "—")} '
+                f'· Score : {safe(score_label)}<br/>'
+                f'Interprétation : {safe(meaning)}. '
+                'Ce score ne confirme pas la cause racine.'
+                '</div></div>', unsafe_allow_html=True,
+            )
+
+    st.markdown('<div class="lg-block-heading">03 · Vérification recommandée</div>',
+                unsafe_allow_html=True)
+    recommended = graph_result.get("recommended_test") or source.get("recommended_test") or "Non renseignée"
+    done = source.get("recommended_test_done") is True
+    st.markdown(
+        '<div class="lg-test">'
+        '<div class="lg-test-title">Contrôle proposé par M2</div>'
+        f'<div class="lg-test-text">{safe(recommended)}</div>'
+        f'<div class="lg-test-status">État : {"déclaré effectué dans le JSON de M2" if done else "non effectué / non confirmé"}</div>'
+        '</div>', unsafe_allow_html=True,
+    )
+
+    st.markdown('<div class="lg-block-heading">04 · Incertitudes & limites</div>',
+                unsafe_allow_html=True)
+    if cautions:
+        for caution in cautions:
+            st.markdown(f'<div class="lg-limit">{safe(caution)}</div>',
+                        unsafe_allow_html=True)
+    else:
+        st.markdown('<div class="lg-note">Aucune limite supplémentaire signalée par le workflow.</div>',
+                    unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="lg-disclaimer">Rapport structuré sans LLM ni RAG. '
+        'Mesures, scores, interprétations et contrôles proviennent de M2. '
+        'Aucune validation ECU industrielle ni confirmation physique n’est revendiquée.</div>',
+        unsafe_allow_html=True,
+    )
+    with st.expander("Afficher la synthèse Markdown brute (traçabilité)"):
+        st.markdown(graph_result.get("report_text", "Aucune synthèse disponible."))
 
 
 @st.cache_data(show_spinner=False)
@@ -602,6 +779,42 @@ with t_report:
         file_name=f"BMS_{re.sub(r'[^A-Za-z0-9_-]', '_', session_id)}_diagnosis.json",
         mime="application/json",
     )
+
+    # Le workflow LangGraph analyse uniquement les faits déjà produits par M2.
+    # Pas de nouveau modèle ML, pas de LLM, pas de RAG à ce stade.
+    st.divider()
+    st.subheader("Analyse structurée — LangGraph")
+    st.caption(
+        "Quatre étapes : lecture du diagnostic, examen des preuves, "
+        "vérification des incertitudes et synthèse traçable. "
+        "Ce workflow ne confirme pas une cause physique."
+    )
+    if st.button("Analyser la session avec LangGraph", type="primary", key="run_langgraph"):
+        try:
+            graph_result = run_diagnostic_workflow(report)
+            # Associer le résultat au contenu précis du diagnostic pour éviter
+            # de montrer une ancienne synthèse après un import ou un changement.
+            st.session_state["m3_langgraph_result"] = {
+                "source_json": json.dumps(report, sort_keys=True, ensure_ascii=False),
+                "result": graph_result,
+            }
+        except (ValueError, KeyError, TypeError) as exc:
+            st.session_state.pop("m3_langgraph_result", None)
+            st.error(f"Le workflow n'a pas pu analyser cette session : {exc}")
+
+    saved = st.session_state.get("m3_langgraph_result")
+    if saved and saved.get("source_json") == json.dumps(report, sort_keys=True, ensure_ascii=False):
+        graph_result = saved["result"]
+        if graph_result.get("session_id") == session_id:
+            st.success("Workflow terminé : synthèse générée à partir des données M2.")
+            render_langgraph_report(graph_result)
+            st.download_button(
+                "⬇ Télécharger la synthèse LangGraph",
+                data=graph_result["report_text"].encode("utf-8"),
+                file_name=f"BMS_{re.sub(r'[^A-Za-z0-9_-]', '_', session_id)}_langgraph.md",
+                mime="text/markdown",
+                key="download_langgraph_report",
+            )
 
 st.markdown(
     '<div class="footer">ECU-BMS-Project · Module M3 · Sources : données M1 et sorties de M2. '
