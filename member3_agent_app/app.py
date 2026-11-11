@@ -7,7 +7,7 @@ Sources :
 - member1_simulator/datasets/test.csv (signaux synthétiques par session)
 - member2_ml/results/diagnoses.json (sorties du pipeline de M2)
 
-Cette interface NE lance ni entraînement, ni modèle ML, ni LLM.
+Cette interface NE lance ni entraînement, ni modèle ML, ni API externe.
 Elle n'invente aucun verdict fonctionnel PASS/FAIL.
 """
 
@@ -412,13 +412,43 @@ def render_langgraph_report(graph_result: dict[str, Any]) -> None:
         st.markdown('<div class="lg-note">Aucune limite supplémentaire signalée par le workflow.</div>',
                     unsafe_allow_html=True)
 
+    # RAG documentaire : citations issues de fichiers locaux, avec numéros de lignes.
+    st.markdown('<div class="lg-block-heading">05 · Références techniques (RAG local)</div>'
+                '<div class="lg-block-sub">Extraits retrouvés dans la documentation de M1 et M2. '
+                'Les seuils sont illustratifs, pas des exigences OEM.</div>', unsafe_allow_html=True)
+    sources = graph_result.get("rag_sources") or []
+    if sources:
+        for i, source_info in enumerate(sources, start=1):
+            location = (f"{source_info['source']}:L{source_info['start_line']}"
+                        f"-L{source_info['end_line']}")
+            st.markdown(
+                '<div class="lg-cause">'
+                '<div class="lg-eyebrow">Référence documentaire · '
+                + safe(i) + '</div>'
+                '<div class="lg-cause-code">' + safe(location) + '</div>'
+                '<div class="lg-cause-details">Correspondance lexicale : '
+                + safe(source_info.get("relevance", "?")) + '</div></div>',
+                unsafe_allow_html=True,
+            )
+            with st.expander(f"Lire le passage {i} — {source_info['source']}"):
+                st.code(source_info.get("text", ""), language="text")
+    else:
+        st.warning("Aucune documentation correspondante n'a été trouvée. "
+                   "Vérifie la présence des fichiers README et règles dans le dépôt.")
+
+    checks = graph_result.get("rule_checks") or []
+    if checks:
+        st.markdown('**Contrôles des règles configurées**')
+        st.dataframe(pd.DataFrame(checks), use_container_width=True, hide_index=True)
+
     st.markdown(
-        '<div class="lg-disclaimer">Rapport structuré sans LLM ni RAG. '
-        'Mesures, scores, interprétations et contrôles proviennent de M2. '
-        'Aucune validation ECU industrielle ni confirmation physique n’est revendiquée.</div>',
+        '<div class="lg-disclaimer">Analyse LangGraph + vérifications documentaires locales. '
+        'Les mesures et hypothèses proviennent de M2 ; les documents viennent '
+        'des fichiers du dépôt. Aucune validation ECU industrielle ni cause physique '
+        'confirmée n’est revendiquée.</div>',
         unsafe_allow_html=True,
     )
-    with st.expander("Afficher la synthèse Markdown brute (traçabilité)"):
+    with st.expander("Afficher la synthèse Markdown complète (traçabilité)"):
         st.markdown(graph_result.get("report_text", "Aucune synthèse disponible."))
 
 
@@ -525,7 +555,7 @@ def make_report(d: dict) -> str:
         "", "---", "Les valeurs proviennent d'une simulation BMS. "
         "Les règles sont illustratives et aucun PASS/FAIL fonctionnel n'a été évalué. "
         "Les hypothèses ne sont pas des causes physiques confirmées. "
-        "Ce rapport est un assemblage descriptif sans LLM ni test exécuté."
+        "Ce rapport rassemble les mesures et hypothèses communiquées par M2, sans test exécuté."
     ]
     return "\n".join(lines)
 
@@ -765,7 +795,7 @@ with t_ml:
 
 with t_report:
     st.subheader("Rapport de la session")
-    st.caption("Reprend exclusivement les résultats de M2. Aucun LLM ni vérification supplémentaire.")
+    st.caption("Reprend les résultats de M2 sans vérification fonctionnelle supplémentaire.")
     md = make_report(report)
     st.markdown(md)
     st.download_button(
@@ -780,20 +810,18 @@ with t_report:
         mime="application/json",
     )
 
-    # Le workflow LangGraph analyse uniquement les faits déjà produits par M2.
-    # Pas de nouveau modèle ML, pas de LLM, pas de RAG à ce stade.
+    # M3 : analyse documentaire locale ; aucun appel à une API externe.
     st.divider()
-    st.subheader("Analyse structurée — LangGraph")
+    st.subheader("Analyse documentée — LangGraph + RAG")
     st.caption(
-        "Quatre étapes : lecture du diagnostic, examen des preuves, "
-        "vérification des incertitudes et synthèse traçable. "
-        "Ce workflow ne confirme pas une cause physique."
+        "Analyse des preuves M2, recherche dans la documentation locale, contrôle "
+        "des seuils configurés, limites et rapport traçable. Aucun verdict ECU "
+        "supplémentaire n'est déduit."
     )
-    if st.button("Analyser la session avec LangGraph", type="primary", key="run_langgraph"):
+    if st.button("Analyser la session avec LangGraph + RAG", type="primary", key="run_langgraph"):
         try:
-            graph_result = run_diagnostic_workflow(report)
-            # Associer le résultat au contenu précis du diagnostic pour éviter
-            # de montrer une ancienne synthèse après un import ou un changement.
+            with st.spinner("Analyse des preuves et consultation des documents BMS..."):
+                graph_result = run_diagnostic_workflow(report)
             st.session_state["m3_langgraph_result"] = {
                 "source_json": json.dumps(report, sort_keys=True, ensure_ascii=False),
                 "result": graph_result,
@@ -806,14 +834,25 @@ with t_report:
     if saved and saved.get("source_json") == json.dumps(report, sort_keys=True, ensure_ascii=False):
         graph_result = saved["result"]
         if graph_result.get("session_id") == session_id:
-            st.success("Workflow terminé : synthèse générée à partir des données M2.")
+            st.success("Workflow terminé : preuves, documentation et synthèse disponibles.")
             render_langgraph_report(graph_result)
             st.download_button(
-                "⬇ Télécharger la synthèse LangGraph",
+                "⬇ Télécharger le rapport LangGraph + RAG (Markdown)",
                 data=graph_result["report_text"].encode("utf-8"),
-                file_name=f"BMS_{re.sub(r'[^A-Za-z0-9_-]', '_', session_id)}_langgraph.md",
+                file_name=f"BMS_{re.sub(r'[^A-Za-z0-9_-]', '_', session_id)}_agent_report.md",
                 mime="text/markdown",
                 key="download_langgraph_report",
+            )
+            export = {key:graph_result.get(key) for key in (
+                "session_id", "observations", "cautions", "recommended_test",
+                "rag_sources", "rule_checks", "rag_status", "report_text"
+            )}
+            st.download_button(
+                "⬇ Télécharger l'analyse agentique (JSON)",
+                data=json.dumps(export, ensure_ascii=False, indent=2).encode("utf-8"),
+                file_name=f"BMS_{re.sub(r'[^A-Za-z0-9_-]', '_', session_id)}_agent_report.json",
+                mime="application/json",
+                key="download_agent_json",
             )
 
 st.markdown(
