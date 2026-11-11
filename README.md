@@ -189,4 +189,4 @@ Trained `.joblib` models should be loaded only from trusted sources. Vehicle rec
 
 - [ririoua](https://github.com/ririoua) — **Member 1:** BMS simulation, fault injection, and dataset generation.
 - [ARWA044](https://github.com/ARWA044) — **Member 2:** Machine learning, measurement-limit rules, and diagnostic JSON.
-- [ihssanemaataoui66-code](https://github.com/ihssanemaataoui66-code) — **Member 3:** BMS Studio dashboard, LangGraph workflow, local RAG, explainable reporting, and integration tests.
+- [Ihssane El Maataoui](https://github.com/elmaataoui-ihssane) — **Member 3:** BMS Studio dashboard, LangGraph workflow, local RAG, explainable reporting, and integration tests.

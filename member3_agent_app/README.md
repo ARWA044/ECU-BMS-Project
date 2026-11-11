@@ -1,7 +1,7 @@
 # Member 3 — BMS Studio: Explainable Diagnostic Dashboard & LangGraph Workflow
 
 **Part of [Intelligent ECU Diagnosis — BMS case study](https://github.com/ARWA044/ECU-BMS-Project)**  
-**Component owner:** [ihssanemaataoui66-code](https://github.com/ihssanemaataoui66-code) — Streamlit dashboard, diagnostic orchestration, local document retrieval, and reporting.
+**Component owner:** [Ihssane El Maataoui](https://github.com/elmaataoui-ihssane) — Streamlit dashboard, diagnostic orchestration, local document retrieval, and reporting.
 
 BMS Studio is the presentation and evidence-analysis component of an academic **ECU fault-diagnosis prototype applied to a simulated Battery Management System (BMS)**. It combines measurements from the BMS simulator (Member 1) with structured diagnostic results from the machine-learning pipeline (Member 2). It visualizes each session, checks the traceability and consistency of reported evidence, searches relevant technical documents, and exports structured reports.
 
@@ -178,5 +178,5 @@ To extend the prototype toward the original ECU/EOL objectives, the system would
 
 - [ririoua](https://github.com/ririoua) — **Member 1:** BMS simulation, fault injection, and dataset generation.
 - [ARWA044](https://github.com/ARWA044) — **Member 2:** Machine learning, rule-based checks, and structured diagnostic evidence.
-- [ihssanemaataoui66-code](https://github.com/ihssanemaataoui66-code) — **Member 3:** Streamlit interface, LangGraph orchestration, local RAG, diagnostic reports, and tests.
+- [Ihssane El Maataoui](https://github.com/elmaataoui-ihssane) — **Member 3:** Streamlit interface, LangGraph orchestration, local RAG, diagnostic reports, and tests.
 
