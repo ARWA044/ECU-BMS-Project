@@ -1,7 +1,7 @@
 # Member 3 — BMS Studio: Explainable Diagnostic Dashboard & LangGraph Workflow
 
 **Part of [Intelligent ECU Diagnosis — BMS case study](https://github.com/ARWA044/ECU-BMS-Project)**  
-**Component owner:** Member 3 — application, diagnostic orchestration, local document retrieval, and reporting.
+**Component owner:** [ihssanemaataoui66-code](https://github.com/ihssanemaataoui66-code) — Streamlit dashboard, diagnostic orchestration, local document retrieval, and reporting.
 
 BMS Studio is the presentation and evidence-analysis component of an academic **ECU fault-diagnosis prototype applied to a simulated Battery Management System (BMS)**. It combines measurements from the BMS simulator (Member 1) with structured diagnostic results from the machine-learning pipeline (Member 2). It visualizes each session, checks the traceability and consistency of reported evidence, searches relevant technical documents, and exports structured reports.
 
@@ -107,7 +107,7 @@ ECU-BMS-Project/
 └── requirements_m3.txt               # M3 dependencies
 ```
 
-The older `bms_dashboard.py` is a development prototype. Launch **`app.py`** for the integrated application. Do not commit local backups such as `app_backup.py`.
+Launch **`app.py`** for the integrated application. The module does not require local backup files or earlier dashboard prototypes.
 
 ## Setup and launch (Windows CMD)
 
@@ -145,7 +145,7 @@ python -m member3_agent_app.graph
 python member3_agent_app\tests\smoke_all_sessions.py
 ```
 
-The existing unit tests check accepted and rejected diagnostic inputs, uncertainty handling, normal sessions, document retrieval, and rule comparisons. The smoke-test script runs the real workflow on **every diagnosis** in the configured JSON and checks session alignment and report/source integrity. If you did not install the optional smoke script, the first two commands still work.
+The existing unit tests check accepted and rejected diagnostic inputs, uncertainty handling, normal sessions, document retrieval, and rule comparisons. The smoke-test script runs the real workflow on **every diagnosis** in the configured JSON and checks session alignment and report/source integrity. The integration smoke test reads the current CSV and JSON outputs without retraining models.
 
 Suggested manual acceptance checks:
 
@@ -170,10 +170,13 @@ When updated diagnostics are produced by Member 2, refresh the Streamlit session
 - The RAG retrieval is lexical; a retrieved document supports *context and traceability*, not automatic confirmation of a cause.
 - The LangGraph workflow is deterministic and has **no LLM component**. It does not independently diagnose new physical faults or operate hardware.
 
-## Responsibilities and next steps
+## Future development
 
-- **Member 1:** BMS simulation, signal definitions, fault injection, data provenance and future functional ECU response signals.
-- **Member 2:** Measurement validation, rule evaluation, ML classification/anomaly detection, evidence extraction and JSON output.
-- **Member 3:** Streamlit UI, LangGraph orchestration, local document retrieval, uncertainty-aware reporting, downloads and M3 tests.
+To extend the prototype toward the original ECU/EOL objectives, the system would need approved functional test plans, actual or representative ECU command/feedback signals, timing-based checks, and independent validation. These capabilities are **not** claimed by the current prototype.
 
-A future extension to the *original ECU/EOL scope* would add approved test plans and actual or simulated ECU command/feedback signals, followed by timing-based functional checks and an independently validated PASS/FAIL evaluation. This is **not** claimed as part of the current prototype.
+## Contributors
+
+- [ririoua](https://github.com/ririoua) — **Member 1:** BMS simulation, fault injection, and dataset generation.
+- [ARWA044](https://github.com/ARWA044) — **Member 2:** Machine learning, rule-based checks, and structured diagnostic evidence.
+- [ihssanemaataoui66-code](https://github.com/ihssanemaataoui66-code) — **Member 3:** Streamlit interface, LangGraph orchestration, local RAG, diagnostic reports, and tests.
+
