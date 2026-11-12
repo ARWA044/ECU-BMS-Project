@@ -26,3 +26,8 @@ member2_ml/results/tmp/
 .DS_Store
 Thumbs.db
 .vscode/settings.json
+ECU_BMS_M3_Dashboard_Fusion/
+/CHECKLIST_LIVRAISON_M3.md
+/README_INSTALLATION_M3.md
+/member3_agent_app/app_backup.py
+/member3_agent_app/bms_dashboard.py

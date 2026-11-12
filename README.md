@@ -1,147 +1,139 @@
-# Intelligent ECU Diagnosis — BMS Simulation and Machine Learning
+# Intelligent ECU Diagnosis — BMS Simulation, Machine Learning & Diagnostic Reporting
 
-An academic prototype for analyzing simulated Battery Management System (BMS) measurements, detecting abnormal operating conditions, classifying known fault patterns, and exporting evidence-based diagnostic reports.
+An academic proof of concept for **intelligent ECU diagnostics**, implemented on a **simulated Battery Management System (BMS)** use case. The project generates reproducible battery measurements, detects abnormal operating conditions, classifies simulated fault patterns, and produces traceable reports through an interactive dashboard.
 
-The project is organized into two independently maintained components:
+The repository combines three components developed by the project team:
 
-- **Member 1 — BMS simulation:** produces reproducible battery measurements and injects known fault scenarios.
-- **Member 2 — Diagnostics and machine learning:** extracts numerical features, evaluates measurement limits, trains anomaly-detection and fault-classification models, and produces structured JSON reports.
+- **Member 1 — BMS simulation:** generates time-series measurements and injects known fault scenarios.
+- **Member 2 — Rules and machine learning:** validates measurements, detects abnormal windows, classifies known fault patterns, and exports structured diagnostic evidence.
+- **Member 3 — Dashboard and explainable reporting:** visualizes signals and evidence, coordinates a LangGraph workflow, retrieves local technical references, and exports diagnostic reports.
 
-This repository covers these two components only. The diagnostic JSON is designed for integration with a separate reporting or AI-agent component.
+> **Current scope:** This is a prototype using **synthetic BMS data**, not a validated diagnostic system for production ECUs. The available data do not contain the protective-command responses, actuator feedback, or approved timing requirements needed to establish a functional ECU end-of-line (EOL) PASS/FAIL verdict.
 
-> **Project status:** Proof of concept using **synthetic BMS data**. The current implementation identifies measurement-limit violations and suspected fault patterns; it does not yet determine functional ECU test PASS/FAIL from actuator responses or timing requirements.
+## Architecture
 
-## How it works
-
-```text
-BMS simulation (Member 1)
-    |
-    +--> train.csv / test.csv
-                |
-                v
-       Data validation + feature extraction
-                |
-                +--> Random Forest: classify known fault types
-                +--> Isolation Forest: flag unusual time windows
-                +--> Rule engine: check configured measurement limits
-                                |
-                                v
-                       Diagnostic JSON + evidence
-                                |
-                                v
-                     Downstream reporting / AI agent
+```mermaid
+flowchart TD
+    A[Member 1: BMS simulator] --> B[Training and test CSV measurements]
+    B --> C[Member 2: feature extraction and diagnosis]
+    C --> D[Random Forest classification]
+    C --> E[Isolation Forest anomaly detection]
+    C --> F[Measurement-limit rules]
+    D --> G[Structured diagnosis JSON and timestamped evidence]
+    E --> G
+    F --> G
+    B --> H[Member 3: BMS Studio / Streamlit]
+    G --> H
+    G --> I[Member 3: LangGraph workflow]
+    J[Local technical documentation and rules] --> K[TF-IDF document retrieval]
+    K --> I
+    I --> L[Evidence review, uncertainty checks, report generation]
+    L --> H
+    H --> M[Interactive charts and Markdown / JSON exports]
 ```
 
-The machine-learning models and the rule engine play different roles. A rule violation indicates that a measurement crossed a configured limit; an anomaly score indicates unusual behavior relative to a learned baseline; and a class prediction identifies a fault pattern seen during training. **None of these alone proves an ECU functional failure or a physical root cause.**
+The rule engine, anomaly detector, and classifier answer different questions. A measurement-limit violation is not itself a functional ECU failure; a classifier output identifies a pattern learned from the training data, not an independently confirmed physical root cause.
 
 ## Repository structure
 
 ```text
-ECU_BMS_Team_Project/
+ECU-BMS-Project/
 ├── README.md
 ├── requirements.txt
-├── .gitignore
+├── requirements_m3.txt
+├── .streamlit/
+│   └── config.toml
 ├── member1_simulator/
 │   ├── README.md
 │   ├── python/generate_dataset.py
 │   ├── config/battery_config.json
 │   └── datasets/
-│       ├── all_scenarios.csv
 │       ├── train.csv
 │       └── test.csv
 ├── member2_ml/
 │   ├── README.md
-│   ├── src/
-│   │   ├── bms_pipeline.py
-│   │   └── normalize_input.py
-│   ├── config/
-│   │   ├── rules.json
-│   │   └── input_mapping.example.json
+│   ├── src/bms_pipeline.py
+│   ├── config/rules.json
 │   ├── models/
-│   ├── results/
+│   ├── results/diagnoses.json
+│   └── tests/
+├── member3_agent_app/
+│   ├── README.md
+│   ├── app.py
+│   ├── graph.py
+│   ├── knowledge.py
+│   ├── services/data_loader.py
 │   └── tests/
 └── docs/
     └── data_contract.md
 ```
 
-See the component READMEs for implementation details: [BMS simulator](member1_simulator/README.md) and [ML diagnostics](member2_ml/README.md). The expected exchange format is documented in [the data contract](docs/data_contract.md).
+For implementation details, see the component documentation:
 
-## Getting started
+- [Member 1 — BMS simulator](member1_simulator/README.md)
+- [Member 2 — ML and rule-based diagnosis](member2_ml/README.md)
+- [Member 3 — BMS Studio and LangGraph reporting](member3_agent_app/README.md)
+- [Measurement data contract](docs/data_contract.md)
 
-**Prerequisite:** Python 3.10 or newer is recommended. Run the following commands from the **repository root**.
+## Quick start
+
+**Requirements:** Python 3.10+ and an environment with the required packages. Run these commands from the repository root.
 
 ### 1. Install dependencies
 
 ```bash
 python -m pip install -r requirements.txt
+python -m pip install -r requirements_m3.txt
 ```
 
-### 2. Generate BMS data (optional)
+### 2. Explore the pre-generated data
+
+The repository contains simulated measurements and diagnostic JSON files. You can run the dashboard without retraining the models:
+
+```bash
+python -m streamlit run member3_agent_app/app.py --server.port 8502
+```
+
+Open `http://localhost:8502`, select a session in the sidebar, and navigate through **Vue d'ensemble**, **Signaux & preuves**, **Analyse ML**, and **Rapport**. The **Analyser la session avec LangGraph + RAG** action generates a locally sourced report. This version requires **no LLM or API key**.
+
+### 3. Generate new simulated measurements (optional)
 
 ```bash
 python member1_simulator/python/generate_dataset.py
 ```
 
-The repository already includes the generated dataset, so the remaining steps can be run without regenerating it.
+This command regenerates the simulator's CSV outputs and may overwrite existing generated files. Retrain the models or regenerate diagnostic outputs as appropriate after changing the data.
 
-### 3. Inspect session-level features
-
-```bash
-python member2_ml/src/bms_pipeline.py features \
-  --input member1_simulator/datasets/train.csv \
-  --out member2_ml/results/train_session_features.csv
-```
-
-> In Windows PowerShell, enter multiline examples on one line or use PowerShell backticks instead of the Bash `\` continuations shown here.
-
-### 4. Train the models
+### 4. Train, evaluate, and produce diagnostic JSON (optional)
 
 ```bash
+python member2_ml/src/bms_pipeline.py features --input member1_simulator/datasets/train.csv --out member2_ml/results/train_session_features.csv
 python member2_ml/src/bms_pipeline.py train
-```
-
-This fits a Random Forest classifier and an Isolation Forest anomaly detector, and writes the trained artifacts and training metadata to `member2_ml/models/`.
-
-### 5. Evaluate on held-out simulations
-
-```bash
 python member2_ml/src/bms_pipeline.py evaluate
+python member2_ml/src/bms_pipeline.py predict --input member1_simulator/datasets/test.csv --out member2_ml/results/diagnoses.json
 ```
 
-The evaluation generates `heldout_metrics.json`, `heldout_predictions.csv`, and `heldout_diagnoses.json` under `member2_ml/results/`.
-
-### 6. Generate diagnostic JSON
-
-For all held-out sessions:
+For single-session output:
 
 ```bash
-python member2_ml/src/bms_pipeline.py predict \
-  --input member1_simulator/datasets/test.csv \
-  --out member2_ml/results/diagnoses.json
+python member2_ml/src/bms_pipeline.py predict --input member1_simulator/datasets/test.csv --session-id F02_R002 --out member2_ml/results/example_undervoltage_diagnosis.json
 ```
 
-For one session:
-
-```bash
-python member2_ml/src/bms_pipeline.py predict \
-  --input member1_simulator/datasets/test.csv \
-  --session-id F02_R002 \
-  --out member2_ml/results/example_undervoltage_diagnosis.json
-```
-
-### 7. Run the automated tests
+### 5. Run tests
 
 ```bash
 python -m pytest -q member2_ml/tests
+python -m pytest -q member3_agent_app/tests
+python member3_agent_app/tests/smoke_all_sessions.py
 ```
 
-## Data and fault classes
+The last command runs an integration smoke check against the available Member 1 and Member 2 outputs; see the [Member 3 README](member3_agent_app/README.md) for details.
 
-The current dataset contains **160 independent simulated sessions**: 128 for training and 32 for held-out evaluation. Each session records 121 time-stamped samples of battery-pack voltage, battery-pack current, temperature, and state of charge (SOC).
+## Dataset and simulated fault classes
 
-The eight generated conditions are:
+The original dataset includes **160 simulated sessions**: 128 for training and 32 held-out sessions. Each session contains 121 timestamped measurements of pack voltage, pack current, temperature, and state of charge (SOC).
 
-| Class ID | Condition |
+| ID | Simulated operating condition |
 |---|---|
 | `F00` | Normal operation |
 | `F01` | Overvoltage |
@@ -152,52 +144,49 @@ The eight generated conditions are:
 | `F06` | Current-sensor fault |
 | `F07` | Temperature-sensor fault |
 
-Fault labels originate from the simulator and are used for training and evaluation; they are excluded from the predictive feature set.
+The injected-fault labels serve as ground truth for simulation/evaluation and must **not** be used as predictive input features.
 
 ## Prototype evaluation
 
-On the **32 held-out sessions from the same synthetic generator**:
+The Member 2 pipeline reported the following results on **32 held-out sessions from the same synthetic generator**:
 
-| Model | Metric | Observed result |
+| Model | Metric | Result |
 |---|---|---|
-| Random Forest | Fault classification accuracy | 32/32 (100%) |
-| Isolation Forest | Fault detection recall | 22/28 (78.6%) |
-| Isolation Forest | Fault detection precision | 22/22 (100%) |
+| Random Forest | Fault-pattern classification accuracy | 32/32 (100%) |
+| Isolation Forest | Fault-detection recall | 22/28 (78.6%) |
+| Isolation Forest | Fault-detection precision | 22/22 (100%) |
 
-These results demonstrate that the implementation works on the provided simulation, **not** that it is accurate on production ECU recordings. The held-out set contains only four sessions per class, and its faults are generated by the same simplified model as the training data.
+These are **synthetic-data benchmarks**, not estimates of reliability on production ECU measurements. The held-out set contains four sessions per class, generated using the same simplified simulation assumptions as the training set.
 
-## Diagnostic output
+## Diagnostic outputs and reporting
 
-The `predict` command writes a JSON report containing:
+Member 2 produces `member2_ml/results/diagnoses.json`, a list of session-level objects using `schema_version: "1.1"`. Each report can contain:
 
-- The analyzed session ID and model/ruleset versions.
-- The status of configured measurement limits and timestamped supporting evidence.
-- The Random Forest's suspected fault class and uncalibrated class score.
-- Isolation Forest anomaly windows.
+- A session ID and data source;
+- Configured measurement-limit status and timestamped evidence;
+- Random Forest fault hypotheses and uncalibrated class scores;
+- Isolation Forest anomaly windows;
 - Missing information and recommended follow-up checks.
 
-The functional `verdict` is deliberately **`NOT_EVALUATED`**: no ECU protective-command outputs, actuator feedback, or approved response deadlines are included in this dataset. See [Member 2's README](member2_ml/README.md#diagnostic-json-interface) for the interface details.
+Member 3 correlates the JSON records with the time series in `member1_simulator/datasets/test.csv`, renders interactive plots and evidence views, and creates Markdown/JSON exports. The LangGraph workflow retrieves local reference passages with file/line citations, checks supported measurement rules, and preserves diagnostic uncertainty. It **does not modify** Member 2's original verdict or independently retrain the models.
 
-## Integration and future work
+For example, session `F02_R002` contains a suspected undervoltage pattern and a voltage measurement below the configured simulation threshold. This does **not** demonstrate that an ECU failed to respond correctly.
 
-The existing pipeline accepts **CSV measurements** with the schema specified in `docs/data_contract.md`. For differently named CSV columns, `member2_ml/src/normalize_input.py` provides an explicit name-mapping step; physical meaning and units still need verification.
+**Key distinction:** `measurement_limits_status: "LIMIT_VIOLATION"` means an illustrative measurement threshold was crossed. The functional `verdict` remains `"NOT_EVALUATED"` because ECU response signals, actuator feedback, and timing acceptance criteria are unavailable.
 
-In future iterations, the system can be extended to:
+## Limitations and future scope
 
-1. Decode `.asc`/`.blf` logs using matching DBC files and convert them into synchronized measurements.
-2. Analyze functional ECU responses against scenario-specific test plans and response deadlines.
-3. Train and evaluate on more varied, independent simulated or authorized real-world executions.
-4. Integrate diagnostic JSON with an AI-agent workflow and an engineering dashboard.
+- The inputs are synthetic BMS measurements rather than independently validated physical ECU data.
+- Raw CAN `.asc`/`.blf` decoding requires suitable DBC definitions and normalization; it is not part of the current end-to-end dashboard input path.
+- Rule thresholds and battery parameters are illustrative, not approved OEM limits or EOL test plans.
+- Machine-learning class scores are not calibrated probabilities of physical root causes.
+- LangGraph coordinates a deterministic, **local** reporting workflow with TF-IDF document retrieval; there is no LLM, external AI API, or physical ECU interaction.
+- A future ECU/EOL implementation would require command and feedback signals, test-plan acceptance criteria, timing checks, and validation on independent representative data.
 
-A different ECU or substantially different signal distribution requires an adapted feature configuration and an appropriately retrained or independently validated model.
-
-## Reproducibility and security
-
-Generated `.joblib` model binaries are included in the distributable project archive but ignored by Git; they can be recreated with the `train` command. Serialized models should only be loaded from trusted sources. Real automotive recordings may contain confidential information and should not be committed without authorization.
-
-No physical root-cause confirmation or industrial safety validation is claimed by this prototype.
+Trained `.joblib` models should be loaded only from trusted sources. Vehicle recordings may contain confidential information and should not be published without authorization. This project makes no industrial safety-validation claim.
 
 ## Contributors
 
-- [ARWA044](https://github.com/ARWA044) — Machine Learning & Rule-Based Diagnosis
-- [ririoua](https://github.com/ririoua) — BMS Simulation & Dataset Generation
+- [ririoua](https://github.com/ririoua) — **Member 1:** BMS simulation, fault injection, and dataset generation.
+- [ARWA044](https://github.com/ARWA044) — **Member 2:** Machine learning, measurement-limit rules, and diagnostic JSON.
+- [Ihssane El Maataoui](https://github.com/elmaataoui-ihssane) — **Member 3:** BMS Studio dashboard, LangGraph workflow, local RAG, explainable reporting, and integration tests.
