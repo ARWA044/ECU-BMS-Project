@@ -23,6 +23,13 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from member3_agent_app.services.data_loader import load_diagnoses, load_measurements
 from member3_agent_app.graph import run_diagnostic_workflow
 
